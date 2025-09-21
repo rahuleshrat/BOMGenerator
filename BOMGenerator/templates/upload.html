@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DXF → BoM Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
+    .container { max-width: 1000px; margin: auto; padding: 20px; background: white; border: 1px solid #ccc; border-radius: 8px; }
+    h2, h3 { text-align: center; }
+    input[type=file] { margin: 15px 0; }
+    .btn { padding: 8px 16px; background: #007bff; border: none; color: white; border-radius: 5px; cursor: pointer; }
+    .btn:hover { background: #0056b3; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #007bff; color: white; }
+    .section { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>DXF → BoM Generator</h2>
+    <form action="/upload" enctype="multipart/form-data" method="post">
+      <input type="file" name="file" accept=".dxf" required>
+      <br>
+      <button type="submit" class="btn">Process DXF</button>
+    </form>
+
+    {% if entity_summary %}
+    <div class="section">
+      <h3>Entity Summary</h3>
+      <table>
+        <tr><th>Entity Type</th><th>Count</th></tr>
+        {% for etype, cnt in entity_summary.items() %}
+        <tr><td>{{ etype }}</td><td>{{ cnt }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+
+    {% if layers %}
+    <div class="section">
+      <h3>Layers</h3>
+      <table>
+        <tr><th>Layer</th><th>Entity Count</th></tr>
+        {% for layer, cnt in layers %}
+        <tr><td>{{ layer }}</td><td>{{ cnt }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+
+    {% if blocks %}
+    <div class="section">
+      <h3>Block References</h3>
+      <table>
+        <tr><th>Block</th><th>Instances</th></tr>
+        {% for blk, cnt in blocks %}
+        <tr><td>{{ blk }}</td><td>{{ cnt }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+
+    {% if bom %}
+    <div class="section">
+      <h3>Generated Bill of Materials</h3>
+      <table>
+        <tr><th>Item</th><th>Quantity</th><th>Unit</th><th>Source</th></tr>
+        {% for row in bom %}
+        <tr>
+          <td>{{ row.Item }}</td>
+          <td>{{ row.Quantity }}</td>
+          <td>{{ row.Unit }}</td>
+          <td>{{ row.Source }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <br>
+      <a href="{{ download_link }}" class="btn">Download Excel</a>
+    </div>
+    {% endif %}
+  </div>
+  {% if preview %}
+<div class="section">
+  <h3>DXF Preview</h3>
+  <a href="{{ preview }}" target="_blank">
+    <img src="{{ preview }}" alt="DXF Preview" style="max-width:100%; border:1px solid #ccc;">
+  </a>
+  <p style="text-align:center; font-size: 0.9em; color:#555;">
+    (Click the image to open full size)
+  </p>
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "layers": {
+    "CONNECTIVITY": {
+      "item": "CONNECTIVITY",
+      "unit": "m"
+    },
+    "0": {
+      "item": "0",
+      "unit": "m"
+    },
+    "INDCON ELECTRICAL": {
+      "item": "INDCON ELECTRICAL",
+      "unit": "m"
+    },
+    "SLD": {
+      "item": "SLD",
+      "unit": "m"
+    },
+    "STCPL-E-SLD PANEL": {
+      "item": "STCPL-E-SLD PANEL",
+      "unit": "m"
+    }
+  },
+  "blocks": {
+    "AA": {
+      "item": "AA",
+      "unit": "pcs"
+    }
+  },
+  "defaults": {
+    "unit_length": "m",
+    "length_precision": 2
+  }
+}
